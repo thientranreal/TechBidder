@@ -23,8 +23,23 @@ router.get("/team", teamController.getTeamPage);
 router.get("/testimonial", testimonialController.getTestimonialPage);
 router.get("/login", authController.getLogin);
 router.get("/logout", authController.logout);
-router.get("/admin", ensureAuthenticated, adminController.getAdmin);
 
+// Admin routes
+router.get("/admin/project", ensureAuthenticated, adminController.getProject);
+router.get(
+  "/admin/project-type",
+  ensureAuthenticated,
+  adminController.getProjectType
+);
+router.get("/admin/solution", ensureAuthenticated, adminController.getSolution);
+router.get(
+  "/admin/team-member",
+  ensureAuthenticated,
+  adminController.getTeamMember
+);
+router.get("/admin/review", ensureAuthenticated, adminController.getReview);
+
+// Post routes
 router.post("/login", authController.postLogin);
 
 // Error route (404)

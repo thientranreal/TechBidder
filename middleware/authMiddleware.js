@@ -4,7 +4,7 @@ function ensureAuthenticated(req, res, next) {
     return next();
   } else {
     // User is not authenticated, redirect to page not found
-    res.status(404).render("404");
+    res.status(404).render("404", { layout: false });
   }
 }
 

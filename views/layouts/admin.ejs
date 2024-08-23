@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bootstrap Dashboard</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+      .sidebar {
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #343a40;
+        padding: 15px;
+        width: 250px;
+      }
+      .sidebar a {
+        color: white;
+        text-decoration: none;
+        display: block;
+        padding: 10px;
+        margin: 5px 0;
+      }
+      .sidebar a:hover {
+        background-color: #495057;
+        border-radius: 4px;
+      }
+      .sidebar a.active {
+        background-color: #e33e33; /* Your preferred primary color */
+        border-radius: 4px;
+      }
+      .content {
+        margin-left: 260px;
+        padding: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <h2 class="text-light">Dashboard</h2>
+      <a
+        href="/admin/project"
+        class="nav-link <%= page === 'project' ? 'active' : '' %>"
+        >Dự án</a
+      >
+      <a
+        href="/admin/project-type"
+        class="nav-link <%= page === 'projectType' ? 'active' : '' %>"
+        >Loại dự án</a
+      >
+      <a
+        href="/admin/solution"
+        class="nav-link <%= page === 'solution' ? 'active' : '' %>"
+        >Giải pháp</a
+      >
+      <a
+        href="/admin/team-member"
+        class="nav-link <%= page === 'teamMember' ? 'active' : '' %>"
+        >Thành viên</a
+      >
+      <a
+        href="/admin/review"
+        class="nav-link <%= page === 'review' ? 'active' : '' %>"
+        >Đánh giá</a
+      >
+      <a href="/logout">Đăng xuất</a>
+    </div>
+
+    <!-- Main content -->
+    <div class="content mt-3"><%- body %></div>
+
+    <!-- Bootstrap & Custom Script -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

@@ -3,9 +3,9 @@ const bcrypt = require("bcrypt");
 
 exports.getLogin = (req, res) => {
   if (req.session && req.session.user) {
-    return res.redirect("/admin");
+    return res.redirect("/admin/project");
   }
-  res.render("login", { error: null });
+  res.render("login", { error: null, layout: false });
 };
 
 exports.postLogin = async (req, res) => {
@@ -16,7 +16,7 @@ exports.postLogin = async (req, res) => {
     // Check if user exists
     const user = await Admin.findOne({ username });
     if (!user) {
-      return res.render("login", { error: "User not found" });
+      return res.render("login", { error: "User not found", layout: false });
     }
 
     // Compare password
@@ -25,13 +25,14 @@ exports.postLogin = async (req, res) => {
       return res.render("login", {
         error: "Invalid credentials",
         success: null,
+        layout: false,
       });
     }
 
     req.session.user = user;
-    res.redirect("/admin");
+    res.redirect("/admin/project");
   } catch (error) {
-    return res.render("login", { error: "An error occurred" });
+    return res.render("login", { error: "An error occurred", layout: false });
   }
 };
 

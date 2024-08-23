@@ -1,3 +1,3 @@
 exports.getProjectPage = (req, res) => {
-  res.render("project", { currentPath: req.path });
+  res.render("project", { page: "project" });
 };

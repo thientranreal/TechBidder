@@ -1,3 +1,3 @@
 exports.getContactPage = (req, res) => {
-  res.render("contact", { currentPath: req.path });
+  res.render("contact", { page: "contact" });
 };
