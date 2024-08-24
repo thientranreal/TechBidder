@@ -1,1 +1,146 @@
-<h1>Project</h1>
+<div class="container">
+  <h2 class="mb-4">Quản lý Dự án</h2>
+
+  <% if (error) { %>
+  <div class="alert alert-danger"><%= error %></div>
+  <% } %>
+
+  <!-- Add New Project Form -->
+  <form
+    action="/admin/project/create"
+    method="POST"
+    enctype="multipart/form-data"
+    class="mb-4"
+  >
+    <input
+      type="text"
+      name="name"
+      class="form-control mb-3"
+      placeholder="Tên dự án"
+      required
+    />
+    <input type="file" name="image" class="form-control mb-3" accept="image/*" required />
+    <select name="projectCategory" class="form-select mb-3" required>
+      <% projectCategories.forEach(category => { %>
+      <option value="<%= category.id %>"><%= category.name %></option>
+      <% }) %>
+    </select>
+    <button type="submit" class="btn btn-primary">Thêm</button>
+  </form>
+
+  <!-- List of Projects -->
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Tên</th>
+        <th>Hình ảnh</th>
+        <th>Loại dự án</th>
+        <th>Hành động</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% projects.forEach(project => { %>
+      <tr>
+        <td><%= project.name %></td>
+        <td>
+          <img
+            src="<%= project.image %>"
+            alt="<%= project.name %>"
+            style="width: 100px; height: auto"
+          />
+        </td>
+        <td><%= project.projectCategory.name %></td>
+        <td>
+          <!-- Button to Open Modal -->
+          <button
+            type="button"
+            class="btn btn-sm btn-warning"
+            data-bs-toggle="modal"
+            data-bs-target="#editProjectModal-<%= project.id %>"
+          >
+            Sửa
+          </button>
+
+          <!-- Edit Project Modal -->
+          <div
+            class="modal fade"
+            id="editProjectModal-<%= project.id %>"
+            tabindex="-1"
+            aria-labelledby="editProjectModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="editProjectModalLabel">
+                    Sửa Dự Án
+                  </h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <!-- Edit Project Form -->
+                  <form
+                    action="/admin/project/edit/<%= project.id %>"
+                    method="POST"
+                    enctype="multipart/form-data"
+                  >
+                    <div class="mb-3">
+                      <label for="projectName" class="form-label"
+                        >Tên dự án</label
+                      >
+                      <input
+                        id="projectName"
+                        type="text"
+                        name="name"
+                        value="<%= project.name %>"
+                        class="form-control"
+                        required
+                      />
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="projectImage" class="form-label"
+                        >Hình ảnh</label
+                      >
+                      <input id="projectImage" type="file" name="image" class="form-control" accept="image/*" />
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="projectCategory" class="form-label"
+                        >Loại dự án</label
+                      >
+                      <select id="projectCategory" name="projectCategory" class="form-select" required>
+                        <% projectCategories.forEach(category => { %>
+                        <option value="<%= category.id %>" <%= category.id === project.projectCategory.id ? 'selected' : '' %>>
+                          <%= category.name %>
+                        </option>
+                        <% }) %>
+                      </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Lưu</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Delete Form -->
+          <form
+            action="/admin/project/delete/<%= project.id %>"
+            method="POST"
+            class="d-inline-block"
+          >
+            <button class="btn btn-sm btn-danger" type="submit">Xóa</button>
+          </form>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>

@@ -1,1 +1,62 @@
-<h1>PT</h1>
+<div class="container">
+  <h2 class="mb-4">Quản lý loại dự án</h2>
+
+  <% if (error) { %>
+  <div class="alert alert-danger"><%= error %></div>
+  <% } %>
+
+  <!-- Add New Project Type Form -->
+  <form action="/admin/project-type/create" method="POST" class="mb-4">
+    <input
+      type="text"
+      name="name"
+      class="form-control d-inline-block w-auto"
+      placeholder="Tên loại dự án"
+      required
+    />
+    <button type="submit" class="btn btn-primary">Thêm</button>
+  </form>
+
+  <!-- List of Project Types -->
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Tên</th>
+        <th>Hành động</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% projectTypes.forEach((type) => { %>
+      <tr>
+        <td><%= type.name %></td>
+        <td>
+          <!-- Edit Form -->
+          <form
+            action="/admin/project-type/edit/<%= type.id %>"
+            method="POST"
+            class="d-inline-block"
+          >
+            <input
+              type="text"
+              name="name"
+              value="<%= type.name %>"
+              class="form-control d-inline-block w-auto"
+              required
+            />
+            <button type="submit" class="btn btn-sm btn-success">Lưu</button>
+          </form>
+
+          <!-- Delete Form -->
+          <form
+            action="/admin/project-type/delete/<%= type.id %>"
+            method="POST"
+            class="d-inline-block"
+          >
+            <button class="btn btn-sm btn-danger" type="submit">Xóa</button>
+          </form>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
