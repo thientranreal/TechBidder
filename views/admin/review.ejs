@@ -1,1 +1,159 @@
-<h1>Review</h1>
+<div class="container">
+  <h2 class="mb-4">Đánh giá</h2>
+
+  <% if (error) { %>
+  <div class="alert alert-danger"><%= error %></div>
+  <% } %>
+
+  <!-- Add New Review Form -->
+  <form
+    action="/admin/review/create"
+    method="POST"
+    enctype="multipart/form-data"
+    class="mb-4"
+  >
+    <input
+      type="text"
+      name="reviewer"
+      class="form-control mb-3"
+      placeholder="Tên người đánh giá"
+      required
+    />
+    <input
+      type="text"
+      name="profession"
+      class="form-control mb-3"
+      placeholder="Nghề nghiệp"
+      required
+    />
+    <textarea
+      name="message"
+      class="form-control mb-3"
+      rows="5"
+      placeholder="Nội dung đánh giá"
+      required
+    ></textarea>
+    <input
+      type="file"
+      name="avatar"
+      class="form-control mb-3"
+      accept="image/*"
+      required
+    />
+    <button type="submit" class="btn btn-primary">Thêm</button>
+  </form>
+
+  <!-- List of Reviews -->
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Người đánh giá</th>
+        <th>Nghề nghiệp</th>
+        <th>Nội dung</th>
+        <th>Hình đại diện</th>
+        <th>Hành động</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% reviews.forEach((review) => { %>
+      <tr>
+        <td><%= review.reviewer %></td>
+        <td><%= review.profession %></td>
+        <td><%= review.message %></td>
+        <td>
+          <img
+            src="<%= review.avatar %>"
+            alt="<%= review.reviewer %>"
+            style="width: 100px"
+          />
+        </td>
+        <td>
+          <!-- Edit Form (trigger modal) -->
+          <button
+            type="button"
+            class="btn btn-warning btn-sm mb-2"
+            data-bs-toggle="modal"
+            data-bs-target="#editModal<%= review.id %>"
+          >
+            Sửa
+          </button>
+
+          <!-- Delete Form -->
+          <form
+            action="/admin/review/delete/<%= review.id %>"
+            method="POST"
+            class="d-inline-block"
+          >
+            <button class="btn btn-danger btn-sm" type="submit">Xóa</button>
+          </form>
+        </td>
+      </tr>
+
+      <!-- Edit Modal -->
+      <div class="modal fade" id="editModal<%= review.id %>" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Sửa đánh giá</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form
+                action="/admin/review/edit/<%= review.id %>"
+                method="POST"
+                enctype="multipart/form-data"
+              >
+                <label for="reviewer" class="form-label">Người đánh giá</label>
+                <input
+                  type="text"
+                  name="reviewer"
+                  id="reviewer"
+                  value="<%= review.reviewer %>"
+                  class="form-control mb-3"
+                  required
+                />
+
+                <label for="profession" class="form-label">Nghề nghiệp</label>
+                <input
+                  type="text"
+                  name="profession"
+                  id="profession"
+                  value="<%= review.profession %>"
+                  class="form-control mb-3"
+                  required
+                />
+
+                <label for="message" class="form-label">Nội dung</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  class="form-control mb-3"
+                  rows="10"
+                  required
+                >
+<%= review.message %></textarea
+                >
+
+                <label for="avatar" class="form-label">Hình ảnh</label>
+                <input
+                  type="file"
+                  name="avatar"
+                  id="avatar"
+                  class="form-control mb-3"
+                  accept="image/*"
+                />
+                <button type="submit" class="btn btn-success">Lưu</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% }) %>
+    </tbody>
+  </table>
+</div>

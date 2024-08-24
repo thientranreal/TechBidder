@@ -1,1 +1,142 @@
-<h1>Solution</h1>
+<div class="container">
+  <h2 class="mb-4">Giải pháp</h2>
+
+  <% if (error) { %>
+  <div class="alert alert-danger"><%= error %></div>
+  <% } %>
+
+  <!-- Add New Solution Form -->
+  <form
+    action="/admin/solution/create"
+    method="POST"
+    enctype="multipart/form-data"
+    class="mb-4"
+  >
+    <input
+      type="text"
+      name="name"
+      class="form-control mb-3"
+      placeholder="Tên giải pháp"
+      required
+    />
+    <textarea
+      name="description"
+      class="form-control mb-3"
+      placeholder="Mô tả"
+      rows="5"
+      required
+    ></textarea>
+    <input
+      type="file"
+      name="image"
+      class="form-control mb-3"
+      accept="image/*"
+      required
+    />
+    <button type="submit" class="btn btn-primary">Thêm</button>
+  </form>
+
+  <!-- List of Solutions -->
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Tên</th>
+        <th>Mô tả</th>
+        <th>Hình ảnh</th>
+        <th>Hành động</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% solutions.forEach((solution) => { %>
+      <tr>
+        <td><%= solution.name %></td>
+        <td><%= solution.description %></td>
+        <td>
+          <img
+            src="<%= solution.image %>"
+            alt="<%= solution.name %>"
+            style="width: 100px"
+          />
+        </td>
+        <td>
+          <!-- Edit Form (trigger modal) -->
+          <button
+            type="button"
+            class="btn btn-warning btn-sm mb-2"
+            data-bs-toggle="modal"
+            data-bs-target="#editModal<%= solution.id %>"
+          >
+            Sửa
+          </button>
+
+          <!-- Delete Form -->
+          <form
+            action="/admin/solution/delete/<%= solution.id %>"
+            method="POST"
+            class="d-inline-block"
+          >
+            <button class="btn btn-danger btn-sm" type="submit">Xóa</button>
+          </form>
+        </td>
+      </tr>
+
+      <!-- Edit Modal -->
+      <div class="modal fade" id="editModal<%= solution.id %>" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Sửa giải pháp</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form
+                action="/admin/solution/edit/<%= solution.id %>"
+                method="POST"
+                enctype="multipart/form-data"
+              >
+                <label for="solution-name" class="form-label"
+                  >Tên giải pháp</label
+                >
+                <input
+                  type="text"
+                  id="solution-name"
+                  name="name"
+                  value="<%= solution.name %>"
+                  class="form-control mb-3"
+                  required
+                />
+
+                <label for="solution-desc" class="form-label">Mô tả</label>
+                <textarea
+                  id="solution-desc"
+                  name="description"
+                  class="form-control mb-3"
+                  rows="10"
+                  required
+                >
+<%= solution.description %></textarea
+                >
+
+                <label for="solution-img" class="form-label">Hình ảnh</label>
+                <input
+                  type="file"
+                  id="solution-img"
+                  name="image"
+                  class="form-control mb-3"
+                  accept="image/*"
+                />
+                <button type="submit" class="btn btn-success">Lưu</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% }) %>
+    </tbody>
+  </table>
+</div>

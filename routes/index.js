@@ -63,6 +63,32 @@ router.post(
 );
 router.post("/admin/project/delete/:id", adminController.deleteProject);
 
+// CRUD Solution routes
+router.post(
+  "/admin/solution/create",
+  upload.single("image"),
+  adminController.createSolution
+);
+router.post(
+  "/admin/solution/edit/:id",
+  upload.single("image"),
+  adminController.editSolution
+);
+router.post("/admin/solution/delete/:id", adminController.deleteSolution);
+
+// CRUD Review routes
+router.post(
+  "/admin/review/create",
+  upload.single("avatar"),
+  adminController.createReview
+);
+router.post(
+  "/admin/review/edit/:id",
+  upload.single("avatar"),
+  adminController.editReview
+);
+router.post("/admin/review/delete/:id", adminController.deleteReview);
+
 // Error route (404)
 router.use(errorController.get404Page);
 
