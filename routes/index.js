@@ -10,7 +10,14 @@ const teamController = require("../controllers/teamController");
 const testimonialController = require("../controllers/testimonialController");
 const errorController = require("../controllers/errorController");
 const authController = require("../controllers/authController");
-const adminController = require("../controllers/adminController");
+
+// admin controller
+const projectAdminController = require("../controllers/admin/projectController");
+const projectTypeController = require("../controllers/admin/projectTypeController");
+const reviewController = require("../controllers/admin/reviewController");
+const solutionController = require("../controllers/admin/solutionController");
+const teamMemberController = require("../controllers/admin/teamMemberController");
+
 // Middleware
 const ensureAuthenticated = require("../middlewares/authMiddleware");
 const upload = require("../middlewares/upload");
@@ -27,67 +34,93 @@ router.get("/login", authController.getLogin);
 router.get("/logout", authController.logout);
 
 // Admin routes
-router.get("/admin/project", ensureAuthenticated, adminController.getProject);
+router.get(
+  "/admin/project",
+  ensureAuthenticated,
+  projectAdminController.getProject
+);
 router.get(
   "/admin/project-type",
   ensureAuthenticated,
-  adminController.getProjectType
+  projectTypeController.getProjectType
 );
-router.get("/admin/solution", ensureAuthenticated, adminController.getSolution);
+router.get(
+  "/admin/solution",
+  ensureAuthenticated,
+  solutionController.getSolution
+);
 router.get(
   "/admin/team-member",
   ensureAuthenticated,
-  adminController.getTeamMember
+  teamMemberController.getTeamMember
 );
-router.get("/admin/review", ensureAuthenticated, adminController.getReview);
+router.get("/admin/review", ensureAuthenticated, reviewController.getReview);
 
 // Post routes
 router.post("/login", authController.postLogin);
 // CRUD for project type
-router.post("/admin/project-type/create", adminController.createProjectType);
-router.post("/admin/project-type/edit/:id", adminController.editProjectType);
+router.post(
+  "/admin/project-type/create",
+  projectTypeController.createProjectType
+);
+router.post(
+  "/admin/project-type/edit/:id",
+  projectTypeController.editProjectType
+);
 router.post(
   "/admin/project-type/delete/:id",
-  adminController.deleteProjectType
+  projectTypeController.deleteProjectType
 );
 // CRUD for project
 router.post(
   "/admin/project/create",
   upload.single("image"),
-  adminController.createProject
+  projectAdminController.createProject
 );
 router.post(
   "/admin/project/edit/:id",
   upload.single("image"),
-  adminController.editProject
+  projectAdminController.editProject
 );
-router.post("/admin/project/delete/:id", adminController.deleteProject);
+router.post("/admin/project/delete/:id", projectAdminController.deleteProject);
 
 // CRUD Solution routes
 router.post(
   "/admin/solution/create",
   upload.single("image"),
-  adminController.createSolution
+  solutionController.createSolution
 );
 router.post(
   "/admin/solution/edit/:id",
   upload.single("image"),
-  adminController.editSolution
+  solutionController.editSolution
 );
-router.post("/admin/solution/delete/:id", adminController.deleteSolution);
+router.post("/admin/solution/delete/:id", solutionController.deleteSolution);
 
 // CRUD Review routes
 router.post(
   "/admin/review/create",
   upload.single("avatar"),
-  adminController.createReview
+  reviewController.createReview
 );
 router.post(
   "/admin/review/edit/:id",
   upload.single("avatar"),
-  adminController.editReview
+  reviewController.editReview
 );
-router.post("/admin/review/delete/:id", adminController.deleteReview);
+router.post("/admin/review/delete/:id", reviewController.deleteReview);
+
+// CRUD team member routs
+router.post(
+  "/admin/team-member/create",
+  upload.single("image"),
+  teamMemberController.createTeamMember
+);
+
+router.post(
+  "/admin/team-member/edit-social-media/:id",
+  teamMemberController.updateSocialMedia
+);
 
 // Error route (404)
 router.use(errorController.get404Page);

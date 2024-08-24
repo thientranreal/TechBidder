@@ -1,1 +1,208 @@
-<h1>Team</h1>
+<div class="container">
+  <h2 class="mb-4">Thành viên nhóm</h2>
+
+  <% if (error) { %>
+  <div class="alert alert-danger"><%= error %></div>
+  <% } %>
+
+  <!-- Add New Team Member Form -->
+  <form
+    action="/admin/team-member/create"
+    method="POST"
+    enctype="multipart/form-data"
+    class="mb-4"
+  >
+    <input
+      type="text"
+      name="name"
+      class="form-control mb-3"
+      placeholder="Tên thành viên"
+      required
+    />
+    <input
+      type="text"
+      name="profession"
+      class="form-control mb-3"
+      placeholder="Chức vụ"
+      required
+    />
+    <input
+      type="file"
+      name="image"
+      class="form-control mb-3"
+      accept="image/*"
+      required
+    />
+    <button type="submit" class="btn btn-primary">Thêm</button>
+  </form>
+
+  <!-- List of Team Members -->
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Hình ảnh</th>
+        <th>Tên</th>
+        <th>Chức vụ</th>
+        <th>Mạng xã hội</th>
+        <th>Hành động</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% teamMembers.forEach((member) => { %>
+      <tr>
+        <td>
+          <img
+            src="<%= member.image %>"
+            alt="<%= member.name %>"
+            style="width: 50px; height: auto"
+          />
+        </td>
+        <td><%= member.name %></td>
+
+        <td><%= member.profession %></td>
+
+        <td>
+          <form
+            method="POST"
+            action="/admin/team-member/edit-social-media/<%= member.id %>"
+          >
+            <label for="facebook" class="form-label">Facebook</label>
+            <input
+              type="text"
+              name="facebook"
+              id="facebook"
+              class="form-control mb-3"
+              value="<%= member.fbLink %>"
+            />
+
+            <label for="twitter" class="form-label">Twitter</label>
+            <input
+              type="text"
+              id="twitter"
+              name="twitter"
+              class="form-control mb-3"
+              value="<%= member.twitterLink %>"
+            />
+
+            <label for="instagram" class="form-label">Instagram</label>
+            <input
+              type="text"
+              name="instagram"
+              id="instagram"
+              class="form-control mb-3"
+              value="<%= member.instaLink %>"
+            />
+
+            <label for="linkedin" class="form-label">LinkedIn</label>
+            <input
+              type="text"
+              id="linkedin"
+              name="linkedin"
+              class="form-control mb-3"
+              value="<%= member.linkedInLink %>"
+            />
+
+            <button class="btn btn-sm btn-success" type="submit">Lưu</button>
+          </form>
+        </td>
+
+        <td>
+          <!-- Edit Form Trigger (Modal) -->
+          <button
+            class="btn btn-sm btn-warning mt-2"
+            data-bs-toggle="modal"
+            data-bs-target="#editModal-<%= member.id %>"
+          >
+            Sửa
+          </button>
+
+          <!-- Delete Form -->
+          <form
+            action="/admin/team-member/delete/<%= member.id %>"
+            method="POST"
+            class="d-inline-block"
+          >
+            <button class="btn btn-sm btn-danger mt-2" type="submit">
+              Xóa
+            </button>
+          </form>
+
+          <!-- Edit Modal -->
+          <div
+            class="modal fade"
+            id="editModal-<%= member.id %>"
+            tabindex="-1"
+            aria-labelledby="editModalLabel-<%= member.id %>"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="editModalLabel-<%= member.id %>">
+                    Sửa thành viên
+                  </h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <form
+                    action="/admin/team-member/edit/<%= member.id %>"
+                    method="POST"
+                    enctype="multipart/form-data"
+                  >
+                    <div class="mb-3">
+                      <label for="name" class="form-label"
+                        >Tên thành viên</label
+                      >
+                      <input
+                        type="text"
+                        name="name"
+                        class="form-control"
+                        value="<%= member.name %>"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="profession" class="form-label">Chức vụ</label>
+                      <input
+                        type="text"
+                        name="profession"
+                        class="form-control"
+                        value="<%= member.profession %>"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="image" class="form-label">Hình ảnh</label>
+                      <input
+                        type="file"
+                        name="image"
+                        class="form-control"
+                        accept="image/*"
+                      />
+                    </div>
+                    <div class="modal-footer">
+                      <button type="submit" class="btn btn-success">Lưu</button>
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                      >
+                        Hủy
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
