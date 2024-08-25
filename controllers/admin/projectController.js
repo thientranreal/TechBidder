@@ -31,7 +31,7 @@ exports.getProject = async (req, res) => {
 
 // Create a new project
 exports.createProject = async (req, res) => {
-  const { name, projectCategory } = req.body;
+  const { name, link, projectCategory } = req.body;
 
   const image = req.file ? `/img/${req.file.filename}` : null; // Handle image upload
 
@@ -39,6 +39,7 @@ exports.createProject = async (req, res) => {
     const newProject = new Project({
       name,
       image,
+      link,
       projectCategory,
     });
 
@@ -63,7 +64,7 @@ exports.createProject = async (req, res) => {
 // Edit a project
 exports.editProject = async (req, res) => {
   const { id } = req.params;
-  const { name, projectCategory } = req.body;
+  const { name, link, projectCategory } = req.body;
   const image = req.file ? `/img/${req.file.filename}` : null; // Handle image upload
 
   try {
@@ -85,6 +86,7 @@ exports.editProject = async (req, res) => {
       }
 
       project.name = name;
+      project.link = link;
       project.projectCategory = projectCategory;
       await project.save();
     }

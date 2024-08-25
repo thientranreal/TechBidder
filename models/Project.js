@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const projectSchema = new mongoose.Schema({
   name: { type: String, required: true },
   image: { type: String, required: true },
+  link: { type: String, required: true },
   projectCategory: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "ProjectCategory",

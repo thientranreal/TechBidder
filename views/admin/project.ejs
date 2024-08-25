@@ -19,6 +19,13 @@
       placeholder="Tên dự án"
       required
     />
+    <input
+      type="text"
+      name="link"
+      class="form-control mb-3"
+      placeholder="Đường dẫn"
+      required
+    />
     <input type="file" name="image" class="form-control mb-3" accept="image/*" required/>
     <select name="projectCategory" class="form-select mb-3" required>
       <% projectCategories.forEach(category => { %>
@@ -33,6 +40,7 @@
     <thead>
       <tr>
         <th>Tên</th>
+        <th>Đường dẫn</th>
         <th>Hình ảnh</th>
         <th>Loại dự án</th>
         <th>Hành động</th>
@@ -42,6 +50,7 @@
       <% projects.forEach(project => { %>
       <tr>
         <td><%= project.name %></td>
+        <td><%= project.link %></td>
         <td>
           <img
             src="<%= project.image %>"
@@ -98,6 +107,20 @@
                         type="text"
                         name="name"
                         value="<%= project.name %>"
+                        class="form-control"
+                        required
+                      />
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="link" class="form-label"
+                        >Đường dẫn</label
+                      >
+                      <input
+                        id="link"
+                        type="text"
+                        name="link"
+                        value="<%= project.link %>"
                         class="form-control"
                         required
                       />

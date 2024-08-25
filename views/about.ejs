@@ -163,7 +163,12 @@
           </div>
         </div>
       </div>
-      <% delay += 0.2; %> <% }) %>
+
+      <% if ((index + 1) % 3 === 0) { %> <% delay = 0.1; %>
+      <!-- Reset delay after every 3 items -->
+      <% } else { %> <% delay += 0.2; %>
+      <!-- Increment delay for other items -->
+      <% } %> <% }) %>
     </div>
   </div>
 </div>
