@@ -26,11 +26,11 @@ exports.getSolution = async (req, res) => {
 
 // Create new solution
 exports.createSolution = async (req, res) => {
-  const { name, description } = req.body;
+  const { name, description, link } = req.body;
   const image = req.file ? `/img/${req.file.filename}` : null;
 
   try {
-    const newSolution = new Solution({ name, description, image });
+    const newSolution = new Solution({ name, description, image, link });
 
     await newSolution.save();
     res.redirect("/admin/solution");
@@ -51,7 +51,7 @@ exports.createSolution = async (req, res) => {
 // Edit existing solution
 exports.editSolution = async (req, res) => {
   const { id } = req.params;
-  const { name, description } = req.body;
+  const { name, description, link } = req.body;
   const image = req.file ? `/img/${req.file.filename}` : null;
 
   try {
@@ -73,6 +73,7 @@ exports.editSolution = async (req, res) => {
 
       solution.name = name;
       solution.description = description;
+      solution.link = link;
       await solution.save();
     }
     res.redirect("/admin/solution");

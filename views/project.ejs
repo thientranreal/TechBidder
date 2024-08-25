@@ -1,32 +1,3 @@
-<!-- Full Screen Search Start -->
-<div class="modal fade" id="searchModal" tabindex="-1">
-  <div class="modal-dialog modal-fullscreen">
-    <div class="modal-content" style="background: rgba(29, 29, 39, 0.7)">
-      <div class="modal-header border-0">
-        <button
-          type="button"
-          class="btn bg-white btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="modal-body d-flex align-items-center justify-content-center">
-        <div class="input-group" style="max-width: 600px">
-          <input
-            type="text"
-            class="form-control bg-transparent border-light p-3"
-            placeholder="Type search keyword"
-          />
-          <button class="btn btn-light px-4">
-            <i class="bi bi-search"></i>
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- Full Screen Search End -->
-
 <!-- Portfolio Start -->
 <div class="container-xxl py-5">
   <div class="container px-lg-5">
@@ -41,156 +12,55 @@
       <div class="col-12 text-center">
         <ul class="list-inline mb-5" id="portfolio-flters">
           <li class="btn px-3 pe-4 active" data-filter="*">All</li>
-          <li class="btn px-3 pe-4" data-filter=".first">Design</li>
-          <li class="btn px-3 pe-4" data-filter=".second">Development</li>
+
+          <% projectTypes.forEach((type) => { %>
+          <li class="btn px-3 pe-4" data-filter=".<%= type.name %>">
+            <%= type.name %>
+          </li>
+          <% }) %>
         </ul>
       </div>
     </div>
     <div class="row g-4 portfolio-container">
+      <% let delay = 0.1; %>
+      <!-- Initialize delay for animation -->
+      <% projects.forEach((project, index) => { %>
+
       <div
-        class="col-lg-4 col-md-6 portfolio-item first wow zoomIn"
-        data-wow-delay="0.1s"
+        class="col-lg-4 col-md-6 portfolio-item <%= project.projectCategory.name %> wow zoomIn"
+        data-wow-delay="<%= delay.toFixed(1) %>s"
       >
         <div class="position-relative rounded overflow-hidden">
-          <img class="img-fluid w-100" src="img/portfolio-1.jpg" alt="" />
+          <img
+            class="img-fluid w-100"
+            src="<%= project.image %>"
+            alt="<%= project.name %>"
+          />
           <div class="portfolio-overlay">
             <a
               class="btn btn-light"
-              href="img/portfolio-1.jpg"
+              href="<%= project.image %>"
               data-lightbox="portfolio"
               ><i class="fa fa-plus fa-2x text-primary"></i
             ></a>
             <div class="mt-auto">
               <small class="text-white"
-                ><i class="fa fa-folder me-2"></i>Web Design</small
+                ><i class="fa fa-folder me-2"></i><%=
+                project.projectCategory.name %></small
               >
               <a class="h5 d-block text-white mt-1 mb-0" href=""
-                >Project Name</a
+                ><%= project.name %></a
               >
             </div>
           </div>
         </div>
       </div>
-      <div
-        class="col-lg-4 col-md-6 portfolio-item second wow zoomIn"
-        data-wow-delay="0.3s"
-      >
-        <div class="position-relative rounded overflow-hidden">
-          <img class="img-fluid w-100" src="img/portfolio-2.jpg" alt="" />
-          <div class="portfolio-overlay">
-            <a
-              class="btn btn-light"
-              href="img/portfolio-2.jpg"
-              data-lightbox="portfolio"
-              ><i class="fa fa-plus fa-2x text-primary"></i
-            ></a>
-            <div class="mt-auto">
-              <small class="text-white"
-                ><i class="fa fa-folder me-2"></i>Web Design</small
-              >
-              <a class="h5 d-block text-white mt-1 mb-0" href=""
-                >Project Name</a
-              >
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        class="col-lg-4 col-md-6 portfolio-item first wow zoomIn"
-        data-wow-delay="0.6s"
-      >
-        <div class="position-relative rounded overflow-hidden">
-          <img class="img-fluid w-100" src="img/portfolio-3.jpg" alt="" />
-          <div class="portfolio-overlay">
-            <a
-              class="btn btn-light"
-              href="img/portfolio-3.jpg"
-              data-lightbox="portfolio"
-              ><i class="fa fa-plus fa-2x text-primary"></i
-            ></a>
-            <div class="mt-auto">
-              <small class="text-white"
-                ><i class="fa fa-folder me-2"></i>Web Design</small
-              >
-              <a class="h5 d-block text-white mt-1 mb-0" href=""
-                >Project Name</a
-              >
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        class="col-lg-4 col-md-6 portfolio-item second wow zoomIn"
-        data-wow-delay="0.1s"
-      >
-        <div class="position-relative rounded overflow-hidden">
-          <img class="img-fluid w-100" src="img/portfolio-4.jpg" alt="" />
-          <div class="portfolio-overlay">
-            <a
-              class="btn btn-light"
-              href="img/portfolio-4.jpg"
-              data-lightbox="portfolio"
-              ><i class="fa fa-plus fa-2x text-primary"></i
-            ></a>
-            <div class="mt-auto">
-              <small class="text-white"
-                ><i class="fa fa-folder me-2"></i>Web Design</small
-              >
-              <a class="h5 d-block text-white mt-1 mb-0" href=""
-                >Project Name</a
-              >
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        class="col-lg-4 col-md-6 portfolio-item first wow zoomIn"
-        data-wow-delay="0.3s"
-      >
-        <div class="position-relative rounded overflow-hidden">
-          <img class="img-fluid w-100" src="img/portfolio-5.jpg" alt="" />
-          <div class="portfolio-overlay">
-            <a
-              class="btn btn-light"
-              href="img/portfolio-5.jpg"
-              data-lightbox="portfolio"
-              ><i class="fa fa-plus fa-2x text-primary"></i
-            ></a>
-            <div class="mt-auto">
-              <small class="text-white"
-                ><i class="fa fa-folder me-2"></i>Web Design</small
-              >
-              <a class="h5 d-block text-white mt-1 mb-0" href=""
-                >Project Name</a
-              >
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        class="col-lg-4 col-md-6 portfolio-item second wow zoomIn"
-        data-wow-delay="0.6s"
-      >
-        <div class="position-relative rounded overflow-hidden">
-          <img class="img-fluid w-100" src="img/portfolio-6.jpg" alt="" />
-          <div class="portfolio-overlay">
-            <a
-              class="btn btn-light"
-              href="img/portfolio-6.jpg"
-              data-lightbox="portfolio"
-              ><i class="fa fa-plus fa-2x text-primary"></i
-            ></a>
-            <div class="mt-auto">
-              <small class="text-white"
-                ><i class="fa fa-folder me-2"></i>Web Design</small
-              >
-              <a class="h5 d-block text-white mt-1 mb-0" href=""
-                >Project Name</a
-              >
-            </div>
-          </div>
-        </div>
-      </div>
+
+      <% if ((index + 1) % 3 === 0) { %> <% delay = 0.1; %>
+      <!-- Reset delay after every 3 items -->
+      <% } else { %> <% delay += 0.2; %>
+      <!-- Increment delay for other items -->
+      <% } %> <% }) %>
     </div>
   </div>
 </div>

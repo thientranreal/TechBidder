@@ -27,6 +27,13 @@
       required
     ></textarea>
     <input
+      type="text"
+      name="link"
+      class="form-control mb-3"
+      placeholder="Đường dẫn"
+      required
+    />
+    <input
       type="file"
       name="image"
       class="form-control mb-3"
@@ -42,6 +49,7 @@
       <tr>
         <th>Tên</th>
         <th>Mô tả</th>
+        <th>Đường dẫn</th>
         <th>Hình ảnh</th>
         <th>Hành động</th>
       </tr>
@@ -51,6 +59,7 @@
       <tr>
         <td><%= solution.name %></td>
         <td><%= solution.description %></td>
+        <td><%= solution.link %></td>
         <td>
           <img
             src="<%= solution.image %>"
@@ -121,6 +130,16 @@
                 >
 <%= solution.description %></textarea
                 >
+
+                <label for="solution-link" class="form-label">Đường dẫn</label>
+                <input
+                  type="text"
+                  id="solution-link"
+                  name="link"
+                  value="<%= solution.link %>"
+                  class="form-control mb-3"
+                  required
+                />
 
                 <label for="solution-img" class="form-label">Hình ảnh</label>
                 <input
