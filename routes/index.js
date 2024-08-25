@@ -110,11 +110,21 @@ router.post(
 );
 router.post("/admin/review/delete/:id", reviewController.deleteReview);
 
-// CRUD team member routs
+// CRUD team member routes
 router.post(
   "/admin/team-member/create",
   upload.single("image"),
   teamMemberController.createTeamMember
+);
+
+router.post(
+  "/admin/team-member/edit/:id",
+  upload.single("image"),
+  teamMemberController.editTeamMember
+);
+router.post(
+  "/admin/team-member/delete/:id",
+  teamMemberController.deleteTeamMember
 );
 
 router.post(

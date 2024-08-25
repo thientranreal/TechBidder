@@ -51,12 +51,42 @@ exports.createTeamMember = async (req, res) => {
 exports.editTeamMember = async (req, res) => {
   const { id } = req.params;
   const { name, profession } = req.body;
+  const image = req.file ? `/img/${req.file.filename}` : null;
+
   try {
-    await TeamMember.findByIdAndUpdate(id, { name, profession });
+    const teamMember = await TeamMember.findById(id);
+
+    if (teamMember) {
+      if (image && teamMember.image) {
+        // Delete the image file from the server
+        const oldImgPath = `${__dirname}/../../public${teamMember.image}`;
+
+        fs.unlink(oldImgPath, (err) => {
+          if (err) {
+            console.error("Error deleting image file:", err);
+          }
+        });
+
+        teamMember.image = image;
+      }
+
+      teamMember.name = name;
+      teamMember.profession = profession;
+
+      await teamMember.save();
+    }
+
     res.redirect("/admin/team-member");
   } catch (error) {
-    res.render("admin/teamMember", {
-      error: "Lỗi khi sửa thành viên.",
+    console.error("Error editing team member:", error);
+
+    const teamMembers = await TeamMember.find();
+
+    res.render("admin/team-member", {
+      page: "teamMember",
+      layout: "./layouts/admin",
+      teamMembers,
+      error: "Lỗi khi sửa thành viên",
     });
   }
 };
@@ -65,11 +95,32 @@ exports.editTeamMember = async (req, res) => {
 exports.deleteTeamMember = async (req, res) => {
   const { id } = req.params;
   try {
-    await TeamMember.findByIdAndDelete(id);
+    const teamMember = await TeamMember.findByIdAndDelete(id);
+
+    if (teamMember) {
+      if (teamMember.image) {
+        // Delete the image file from the server
+        const oldImgPath = `${__dirname}/../../public${teamMember.image}`;
+
+        fs.unlink(oldImgPath, (err) => {
+          if (err) {
+            console.error("Error deleting image file:", err);
+          }
+        });
+      }
+    }
+
     res.redirect("/admin/team-member");
   } catch (error) {
-    res.render("admin/teamMember", {
-      error: "Lỗi khi xóa thành viên.",
+    console.error("Error deleting team member:", error);
+
+    const teamMembers = await TeamMember.find();
+
+    res.render("admin/team-member", {
+      page: "teamMember",
+      layout: "./layouts/admin",
+      teamMembers,
+      error: "Lỗi khi xóa thành viên",
     });
   }
 };
